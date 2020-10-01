@@ -70,7 +70,7 @@ The so that the Player and the Ground know about each other we should also add a
 
 Now when you press play the Player should stop when it hits the ground.  Whats more is if you look closely at the Player or the Ground when they are selected you will see a thin green line around them to indicate that they have a collider on them. This green line can be expanded using the `Edit Collider` option within the `Box Collider 2D` section of the inspector.
 
-## Applying Movement
+## Applying Horizontal Movement
 
 So now our Player can fall to the Ground but we can't make it do anything.  Let's apply some movement to our Player! Don't be afraid, this next section requires a little bit of code. Lucky for us there are a lot of built in features of Unity that we can use to help us out.
 
@@ -111,3 +111,32 @@ So now our Player can fall to the Ground but we can't make it do anything.  Let'
     
     2. Type: ```rb.velocity = new Vector2(moveDirection * moveSpeed, rb.velocity.y);```
         1. Vector2 is a Unity Property that takes two float variables, x and y. We are applying moveDirection multipled by the moveSpeed to give us the horizontal velocity of the player based on the button pressed or our X value. Meanwhile y will be the current velocity of the rigid body basically implying that all this line is worried about is what the x value is doing.
+
+## Jumping
+First lets add variables for our jump mechanic
+
+1. Add jumpForce as a public float variable that equals 10f
+    1. Type ```public float jumpForce = 10f;```
+2. Add private boolean for isJumping that equals false
+    1. Type ```private bool isJumping = false;```
+
+Next lets add a check to see if the Player is jumping
+1. At the bottom of the Update() 
+    ```if(Input.GetButtonDown("Jump"))
+        {
+            isJumping = true;
+        }
+
+        if(Input.GetButtonUp("Jump))
+        {
+            isJumping = false;
+        } 
+2. Then If the player is jumping apply jump force to the player
+    1. ```if(isJumping)
+        {
+            rb.AddForce(new Vector2(0f, jumpForce));
+            
+            isJumping = false;
+        }
+
+Now the player should be able to jump.
